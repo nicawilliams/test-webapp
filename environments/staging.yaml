@@ -2,3 +2,23 @@ env:
   APP_MESSAGE: Hello, MongoDB!
 envSecrets:
   APP_SECRET: my-secrets
+probes:
+  enabled: true
+  path: /liveness
+  headers: {}
+  liveness:
+    httpGet: true
+    initialDelaySeconds: 10
+    periodSeconds: 60
+    timeoutSeconds: 1
+    successThreshold: 1
+    failureThreshold: 3
+service:
+  type: ClusterIP
+  targetPort: 3000
+serviceAccount:
+  enabled: true
+  name: sa
+  roles:
+    - kind: ClusterRole
+      name: view
